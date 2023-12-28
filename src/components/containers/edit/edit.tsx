@@ -1,18 +1,19 @@
 
 import {useNavigate, useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+
 import {ICategoryCreate} from "../create/types.ts";
 import http_common from "../../../http_common.ts";
 import {Alert, Button, Divider, Form, Input, message, Upload} from "antd";
 import type {RcFile, UploadFile, UploadProps} from "antd/es/upload/interface";
 import type {UploadChangeParam} from "antd/es/upload";
 import {APP_ENV} from "../../../env";
+import {useEffect, useState} from "react";
 
 const EditPage = ()=>{
     const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const [model,setModel]=useState({name:"",price:0});
+    const [model,setModel]=useState({id:-1,name:"",price:0,image:null});
     const {id}=useParams();
 
     useEffect(() => {
@@ -30,7 +31,7 @@ const EditPage = ()=>{
         const modelEdit : ICategoryCreate = {
             name: values.name,
             price:values.price,
-            image: file,
+            image: file!,
 
         };
         try {
@@ -62,10 +63,6 @@ const EditPage = ()=>{
 
 
     const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
-        if (info.file.status === 'uploading') {
-            setFile(null);
-            return;
-        }
         if (info.file.status === 'done') {
             const file = info.file.originFileObj as File;
             setFile(file);
@@ -113,12 +110,7 @@ const beforeUpload = (file: RcFile) => {
                 >
                     <Input/>
                 </Form.Item>
-                <Form.Item<FieldType>
-                    label="Ціна"
-                    name="price"
-
-
-                >
+                <Form.Item label="Ціна" name="price">
                     <Input/>
 
                 </Form.Item>

@@ -1,6 +1,6 @@
 import {Button, Divider, Form, Input, Upload, message, Alert} from "antd";
 import {useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import {useState} from "react";
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
 import type {UploadChangeParam} from 'antd/es/upload';
 import type {RcFile, UploadFile, UploadProps} from 'antd/es/upload/interface';
@@ -47,6 +47,7 @@ const CategoryCreatePage = () => {
 
     type FieldType = {
         name?: string;
+        price?:number;
     };
 
     const customDividerStyle = {
@@ -110,7 +111,7 @@ const CategoryCreatePage = () => {
                 </Form.Item>
                 <Form.Item<FieldType>
                     label="Ціна"
-                    name="price" //name підкреслюється червоним, але все працює, не знаю чому
+                    name="price"
                     rules={[{required: true, message: 'Вкажіть ціну!'}]}
                 >
                     <Input/>
